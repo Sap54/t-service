@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "aXe8OQot3kgb1tAoHx-iE"
+uri = "file://artifacts/t-service/public/images/hero.png"
+type = "image"
+title = "industrial technician fixing hangar gates"
+
+[[generated]]
+id = "gZdVxQbrcz8jhCxLSI2OT"
+uri = "file://artifacts/t-service/public/images/service-speed-doors.png"
+type = "image"
+title = "high-speed industrial PVC door"
+
+[[generated]]
+id = "1X-iMM4XPk3hP_IOcmxD5"
+uri = "file://artifacts/t-service/public/images/service-dock.png"
+type = "image"
+title = "warehouse loading dock leveler"
+
+[[generated]]
+id = "eet7_9SMUvB9A11gEho01"
+uri = "file://artifacts/t-service/public/images/service-auto-doors.png"
+type = "image"
+title = "automatic sliding glass doors"

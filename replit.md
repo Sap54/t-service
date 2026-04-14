@@ -25,3 +25,14 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+### Т-СЕРВИС Landing Page (`artifacts/t-service`)
+- **Type**: React + Vite (frontend-only, no backend)
+- **Preview path**: `/`
+- **Description**: Russian-language landing page for Т-СЕРВИС, a Siberian automatic gates/doors repair company
+- **Features**: Hero, advantages, services grid, brands, geography, social proof, contact form
+- **Contacts**: +7(913)917-87-34, +7(913)000-18-23, +7(913)000-18-27, Telegram @TechFixCrew
+- **Stack**: React, Vite, Tailwind CSS, framer-motion, lucide-react, react-icons
+- **SEO**: Russian meta tags, H1/H2 per spec
