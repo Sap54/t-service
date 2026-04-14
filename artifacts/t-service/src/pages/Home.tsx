@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import heroBg from "@assets/скоростные_ворота_1776186260416.jpg";
 import dockImg from "@assets/cq5dam.L.1600.0_1776186865508.jpeg";
+import pressImg from "@assets/europress_1776186938063.png";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -193,7 +194,7 @@ export default function Home() {
               { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: null },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
-              { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: null },
+              { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
               { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: null }
             ].map((service, i) => (
               <Card key={i} className="bg-card border-border overflow-hidden flex flex-col group">
