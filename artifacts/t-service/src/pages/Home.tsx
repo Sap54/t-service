@@ -7,6 +7,7 @@ import hangarImg from "@assets/hangar_door_(ангарные_ворота)_1_177
 import toImg from "@assets/лысый_1776187150290.png";
 import doorRepairImg from "@assets/ремонт_дверей_1_1776187150290.jpg";
 import gateRepairImg from "@assets/ремонт_дока_1_1776187150290.jpg";
+import visitImg from "@assets/ремонт_двери_3_1776187212168.jpeg";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -199,7 +200,7 @@ export default function Home() {
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
               { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
-              { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: null }
+              { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: visitImg }
             ].map((service, i) => (
               <Card key={i} className="bg-card border-border overflow-hidden flex flex-col group">
                 {service.img && (
