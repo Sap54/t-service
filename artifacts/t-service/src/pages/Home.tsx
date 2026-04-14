@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import heroBg from "@assets/скоростные_ворота_1776186260416.jpg";
+import dockImg from "@assets/cq5dam.L.1600.0_1776186865508.jpeg";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -191,7 +192,7 @@ export default function Home() {
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: "/images/service-auto-doors.png" },
               { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: null },
-              { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: "/images/service-dock.png" },
+              { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
               { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: null },
               { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: null }
             ].map((service, i) => (
