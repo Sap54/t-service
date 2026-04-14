@@ -5,6 +5,9 @@ import dockImg from "@assets/cq5dam.L.1600.0_1776186865508.jpeg";
 import pressImg from "@assets/europress_1776186938063.png";
 import hangarImg from "@assets/hangar_door_(ангарные_ворота)_1_1776186989307.JPG";
 import visitImg from "@assets/ремонт_двери_3_1776187212168.jpeg";
+import toImg1 from "@assets/лысый_1776187150290.png";
+import toImg2 from "@assets/ремонт_дверей_1_1776187150290.jpg";
+import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -193,18 +196,30 @@ export default function Home() {
               { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: null },
               { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: null },
-              { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null },
+              { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
               { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
               { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: visitImg }
             ].map((service, i) => (
               <Card key={i} className="bg-card border-border overflow-hidden flex flex-col group">
-                {service.img && (
+                {'collage' in service && service.collage ? (
+                  <div className="h-48 grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden">
+                    <div className="row-span-2 overflow-hidden">
+                      <img src={service.collage[0]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <img src={service.collage[1]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <img src={service.collage[2]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  </div>
+                ) : service.img ? (
                   <div className="h-48 overflow-hidden">
                     <img src={service.img} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
-                )}
+                ) : null}
                 <CardContent className="p-6 flex flex-col flex-grow">
                   <h4 className="text-xl font-bold mb-2">{service.title}</h4>
                   <p className="text-muted-foreground text-sm mb-6 flex-grow">{service.desc}</p>
