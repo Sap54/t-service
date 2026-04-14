@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import heroBg from "@assets/скоростные_ворота_1776186260416.jpg";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -91,9 +92,9 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40 z-10" />
           <img 
-            src="/images/hero.png" 
+            src={heroBg} 
             alt="ремонт автоматических ворот Новосибирск Hörmann" 
-            className="w-full h-full object-cover object-center opacity-40"
+            className="w-full h-full object-cover object-center opacity-50"
           />
         </div>
         
