@@ -41,9 +41,6 @@ export default function Home() {
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl font-black text-primary tracking-tight">Т-СЕРВИС</span>
-            <div className="hidden md:flex flex-col ml-4 border-l border-border/50 pl-4">
-              <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Сибирь</span>
-            </div>
           </div>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -57,7 +54,7 @@ export default function Home() {
                 <a href="tel:+79139178734" className="text-lg font-bold hover:text-primary transition-colors">
                   +7 (913) 917-87-34
                 </a>
-                <span className="text-xs text-muted-foreground">Позвонить Максу</span>
+                <span className="text-xs text-muted-foreground">Также доступен в MAX</span>
               </div>
               <Button onClick={() => window.open('https://t.me/TechFixCrew', '_blank')} variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
                 <Send className="w-4 h-4 mr-2" />
@@ -130,10 +127,6 @@ export default function Home() {
               <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-8 bg-primary hover:bg-primary/90 text-white font-bold" onClick={scrollToContact}>
                 Вызвать мастера
               </Button>
-              <div className="flex items-center gap-2 text-sm font-medium bg-card/50 backdrop-blur-sm border border-border px-4 py-3 rounded-lg">
-                <ShieldCheck className="w-5 h-5 text-primary" />
-                Доверяют нам: 500+ объектов
-              </div>
             </div>
           </motion.div>
         </div>
