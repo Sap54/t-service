@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import heroBg from "@assets/скоростные_ворота_1776186260416.jpg";
 import dockImg from "@assets/cq5dam.L.1600.0_1776186865508.jpeg";
 import pressImg from "@assets/europress_1776186938063.png";
+import hangarImg from "@assets/hangar_door_(ангарные_ворота)_1_1776186989307.JPG";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -192,7 +193,7 @@ export default function Home() {
               { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: "/images/service-auto-doors.png" },
               { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null },
-              { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: null },
+              { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
               { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
               { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: null }
