@@ -11,7 +11,7 @@ import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
 import gateRepairImg from "@assets/автоматические_ворота_1776238923234.png";
 import autoDoorImg from "@assets/4_1776240464563.jpg";
 import logoKruger from "@assets/крюгер_лого_1776239863517.png";
-import logoOzon from "@assets/0zon_1776239863517.jpg";
+import logoOzon from "@assets/озон_лого_1776267759881.png";
 import logoMetro from "@assets/метро_1776239863517.jpg";
 import logoLenta from "@assets/lenta_1776239863517.jpg";
 import { 
