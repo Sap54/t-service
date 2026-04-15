@@ -9,6 +9,10 @@ import toImg1 from "@assets/лысый_1776187150290.png";
 import toImg2 from "@assets/ремонт_дверей_1_1776187150290.jpg";
 import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
 import gateRepairImg from "@assets/автоматические_ворота_1776238923234.png";
+import logoKruger from "@assets/крюгер_лого_1776239863517.png";
+import logoOzon from "@assets/0zon_1776239863517.jpg";
+import logoMetro from "@assets/метро_1776239863517.jpg";
+import logoLenta from "@assets/lenta_1776239863517.jpg";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -293,7 +297,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SOCIAL PROOF */}
+      {/* CLIENTS */}
       <section className="py-24 bg-card border-y border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 text-center">
@@ -315,37 +319,29 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-background border-border/50">
-              <CardContent className="p-8">
-                <div className="flex text-primary mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
-                </div>
-                <p className="italic text-muted-foreground mb-6">"Оперативно приехали, отремонтировали скоростные ворота Dynaco за 2 часа. Простой склада был минимальным. Отличная работа!"</p>
-                <div className="font-bold">ООО «СибСклад»</div>
-                <div className="text-sm text-primary">Новосибирск</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-background border-border/50">
-              <CardContent className="p-8">
-                <div className="flex text-primary mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
-                </div>
-                <p className="italic text-muted-foreground mb-6">"Заключили договор на регулярное ТО автоматических дверей Dorma. Поломки прекратились, всё работает как часы."</p>
-                <div className="font-bold">ТЦ «Галерея»</div>
-                <div className="text-sm text-primary">Томск</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-background border-border/50">
-              <CardContent className="p-8">
-                <div className="flex text-primary mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
-                </div>
-                <p className="italic text-muted-foreground mb-6">"Доклевеллеры перестали подниматься в самый разгар отгрузок. Мастер Т-СЕРВИС был на месте через час. Спасли ситуацию."</p>
-                <div className="font-bold">LogisticsGroup</div>
-                <div className="text-sm text-primary">Омск</div>
-              </CardContent>
-            </Card>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black uppercase mb-3">Наши <span className="text-primary">клиенты</span></h2>
+            <p className="text-muted-foreground">Нам доверяют крупнейшие сети и предприятия Сибири</p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { src: logoKruger, alt: "ООО ТД Крюгер", bg: "bg-[#2a2a1e]" },
+              { src: logoOzon, alt: "OZON", bg: "bg-white" },
+              { src: logoMetro, alt: "METRO", bg: "bg-[#1b2f6e]" },
+              { src: logoLenta, alt: "Лента", bg: "bg-[#003087]" },
+            ].map((logo, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`${logo.bg} rounded-xl flex items-center justify-center p-6 h-28`}
+              >
+                <img src={logo.src} alt={logo.alt} className="max-h-16 max-w-full object-contain" />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
