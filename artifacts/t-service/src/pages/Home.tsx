@@ -189,7 +189,7 @@ export default function Home() {
             className="mb-16"
           >
             <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 border-l-4 border-primary pl-4">Наши услуги</h2>
-            <h3 className="text-xl text-muted-foreground">Ремонт ангарных ворот ChampionDoor, Обслуживание доклевеллеров, Автоматические двери Dorma, Tormax, Geze, DoorHan, Gilgen</h3>
+            <h3 className="text-xl text-muted-foreground">Ремонт и обслуживание ворот, доклевеллеров, автоматических дверей различных производителей</h3>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
