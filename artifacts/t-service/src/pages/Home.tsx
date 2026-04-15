@@ -287,13 +287,6 @@ export default function Home() {
               <span className="text-primary">а по ангарным воротам — по всей России</span>
             </h2>
             
-            <div className="flex flex-wrap justify-center gap-3">
-              {["Новосибирск", "Томск", "Омск", "Красноярск", "Кемерово", "Иркутск", "Сургут", "Барнаул"].map((city) => (
-                <span key={city} className="px-6 py-3 bg-secondary rounded-full text-sm font-bold uppercase tracking-wider border border-border">
-                  {city}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </section>
