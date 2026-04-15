@@ -8,6 +8,7 @@ import visitImg from "@assets/ремонт_двери_3_1776187212168.jpeg";
 import toImg1 from "@assets/лысый_1776187150290.png";
 import toImg2 from "@assets/ремонт_дверей_1_1776187150290.jpg";
 import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
+import gateRepairImg from "@assets/автоматические_ворота_1776238923234.png";
 import { 
   Phone, MapPin, Wrench, Settings, 
   ShieldCheck, Clock, Zap, Truck,
@@ -193,7 +194,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
-              { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: null },
+              { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
               { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: null },
               { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] },
