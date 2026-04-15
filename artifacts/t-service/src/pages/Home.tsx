@@ -27,6 +27,30 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [phoneValue, setPhoneValue] = React.useState("+7 (");
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    const digits = raw.replace(/\D/g, "").slice(1); // убираем ведущую "7"
+    let result = "+7 (";
+    if (digits.length > 0) result += digits.slice(0, 3);
+    if (digits.length >= 3) result += ") ";
+    if (digits.length > 3) result += digits.slice(3, 6);
+    if (digits.length >= 6) result += "-";
+    if (digits.length > 6) result += digits.slice(6, 8);
+    if (digits.length >= 8) result += "-";
+    if (digits.length > 8) result += digits.slice(8, 10);
+    setPhoneValue(result);
+  };
+
+  const handlePhoneFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (!e.target.value || e.target.value === "+7 (") {
+      setPhoneValue("+7 (");
+      setTimeout(() => {
+        e.target.setSelectionRange(4, 4);
+      }, 0);
+    }
+  };
 
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
@@ -384,7 +408,15 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Телефон *</label>
-                    <Input type="tel" placeholder="+7 (___) ___-__-__" className="bg-background border-border h-12" required />
+                    <Input
+                      type="tel"
+                      value={phoneValue}
+                      onChange={handlePhoneChange}
+                      onFocus={handlePhoneFocus}
+                      placeholder="+7 (___) ___-__-__"
+                      className="bg-background border-border h-12"
+                      required
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Город</label>
