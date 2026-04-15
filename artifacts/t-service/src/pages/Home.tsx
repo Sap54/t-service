@@ -370,7 +370,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-16 mb-20">
             <div>
               <h2 className="text-4xl md:text-6xl font-black uppercase mb-6">Свяжитесь <span className="text-primary">с нами</span></h2>
-              <p className="text-xl text-muted-foreground mb-10">Оставьте заявку, и мы перезвоним в течение 15 минут для уточнения деталей.</p>
+              <p className="text-xl text-muted-foreground mb-10">Оставьте заявку, и мы перезвоним для уточнения деталей.</p>
               
               <div className="flex flex-col gap-8">
                 <div className="flex items-start gap-4">
