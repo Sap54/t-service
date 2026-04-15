@@ -9,6 +9,7 @@ import toImg1 from "@assets/лысый_1776187150290.png";
 import toImg2 from "@assets/ремонт_дверей_1_1776187150290.jpg";
 import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
 import gateRepairImg from "@assets/автоматические_ворота_1776238923234.png";
+import autoDoorImg from "@assets/4_1776240464563.jpg";
 import logoKruger from "@assets/крюгер_лого_1776239863517.png";
 import logoOzon from "@assets/0zon_1776239863517.jpg";
 import logoMetro from "@assets/метро_1776239863517.jpg";
@@ -200,7 +201,7 @@ export default function Home() {
             {[
               { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
               { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
-              { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: null },
+              { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: autoDoorImg },
               { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
