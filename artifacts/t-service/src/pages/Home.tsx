@@ -152,7 +152,7 @@ export default function Home() {
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-black uppercase mb-4">Почему выбирают <span className="text-primary">Т-СЕРВИС</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black uppercase mb-4">Почему выбирают <span className="text-primary whitespace-nowrap">Т-СЕРВИС</span></h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Надежность, скорость и профессионализм в каждой детали.</p>
           </motion.div>
 
