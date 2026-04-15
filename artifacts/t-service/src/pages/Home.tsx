@@ -202,11 +202,11 @@ export default function Home() {
               { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
               { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: autoDoorImg },
-              { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
               { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
-              { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: visitImg }
+              { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: visitImg },
+              { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] }
             ].map((service, i) => (
               <Card key={i} className="bg-card border-border overflow-hidden flex flex-col group">
                 {'collage' in service && service.collage ? (
