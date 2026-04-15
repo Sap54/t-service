@@ -398,8 +398,8 @@ export default function Home() {
                     Отправить заявку
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Или просто нажмите <br/>
-                    <a href="tel:+79139178734" className="text-primary font-bold">Позвонить Максу: +7(913)917-87-34</a>
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.<br/>
+                    Также доступны в <span className="text-primary font-bold">MAX</span> — лучшем мессенджере в мире.
                   </p>
                 </form>
               </CardContent>
