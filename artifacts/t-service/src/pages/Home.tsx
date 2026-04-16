@@ -218,13 +218,13 @@ export default function Home() {
             className="mb-16"
           >
             <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 border-l-4 border-primary pl-4">Наши услуги</h2>
-            <h3 className="text-xl text-muted-foreground">Ремонт и обслуживание ворот, доклевеллеров, автоматических дверей различных производителей</h3>
+            <h3 className="text-xl text-muted-foreground">Поставка, монтаж, ремонт, обслуживание и модернизация ворот, доклевеллеров, автоматических дверей различных производителей</h3>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
-              { title: "Ремонт автоматических ворот", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
-              { title: "Ремонт скоростных ворот", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
+              { title: "Автоматические ворота", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
+              { title: "Скоростные ворота", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
               { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: autoDoorImg },
               { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
               { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
