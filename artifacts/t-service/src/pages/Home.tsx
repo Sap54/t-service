@@ -28,6 +28,10 @@ import { Textarea } from "@/components/ui/textarea";
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [phoneValue, setPhoneValue] = React.useState("+7 (");
+  const [formName, setFormName] = React.useState("");
+  const [formCity, setFormCity] = React.useState("");
+  const [formDesc, setFormDesc] = React.useState("");
+  const [formStatus, setFormStatus] = React.useState<"idle" | "sending" | "ok" | "error">("idle");
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
@@ -56,9 +60,37 @@ export default function Home() {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.open('https://t.me/TechFixCrew', '_blank');
+    setFormStatus("sending");
+
+    const token = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+    const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+
+    const text = [
+      "📋 <b>Новая заявка с сайта Т-СЕРВИС</b>",
+      "",
+      `👤 <b>Имя:</b> ${formName || "не указано"}`,
+      `📞 <b>Телефон:</b> ${phoneValue}`,
+      `📍 <b>Город:</b> ${formCity || "не указан"}`,
+      `🔧 <b>Описание:</b> ${formDesc || "не указано"}`,
+    ].join("\n");
+
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
+      });
+      if (!res.ok) throw new Error("Telegram error");
+      setFormStatus("ok");
+      setFormName("");
+      setPhoneValue("+7 (");
+      setFormCity("");
+      setFormDesc("");
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   const fadeIn = {
@@ -401,10 +433,20 @@ export default function Home() {
 
             <Card className="bg-secondary/30 border-border/50">
               <CardContent className="p-8">
+                {formStatus === "ok" ? (
+                  <div className="flex flex-col items-center justify-center text-center py-12 gap-4">
+                    <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
+                      <CheckCircle2 className="w-8 h-8 text-green-500" />
+                    </div>
+                    <h3 className="text-2xl font-black">Заявка отправлена!</h3>
+                    <p className="text-muted-foreground">Мы получили вашу заявку и скоро перезвоним.</p>
+                    <Button variant="outline" className="mt-4" onClick={() => setFormStatus("idle")}>Отправить ещё</Button>
+                  </div>
+                ) : (
                 <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Имя</label>
-                    <Input placeholder="Как к вам обращаться?" className="bg-background border-border h-12" required />
+                    <Input value={formName} onChange={e => setFormName(e.target.value)} placeholder="Как к вам обращаться?" className="bg-background border-border h-12" required />
                   </div>
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Телефон *</label>
@@ -420,20 +462,24 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Город</label>
-                    <Input placeholder="Ваш город" className="bg-background border-border h-12" />
+                    <Input value={formCity} onChange={e => setFormCity(e.target.value)} placeholder="Ваш город" className="bg-background border-border h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Бренд / Описание проблемы</label>
-                    <Textarea placeholder="Что сломалось?" className="bg-background border-border min-h-[120px]" />
+                    <Textarea value={formDesc} onChange={e => setFormDesc(e.target.value)} placeholder="Что сломалось?" className="bg-background border-border min-h-[120px]" />
                   </div>
-                  <Button type="submit" size="lg" className="w-full h-16 text-lg font-bold bg-primary hover:bg-primary/90 text-white">
-                    Отправить заявку
+                  <Button type="submit" disabled={formStatus === "sending"} size="lg" className="w-full h-16 text-lg font-bold bg-primary hover:bg-primary/90 text-white">
+                    {formStatus === "sending" ? "Отправляем..." : "Отправить заявку"}
                   </Button>
+                  {formStatus === "error" && (
+                    <p className="text-sm text-center text-red-400">Ошибка отправки. Позвоните нам напрямую: <a href="tel:+79139178734" className="underline">+7 (913) 917-87-34</a></p>
+                  )}
                   <p className="text-xs text-center text-muted-foreground">
                     Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.<br/>
                     Также доступны в <span className="text-primary font-bold">MAX</span> — лучшем мессенджере в мире.
                   </p>
                 </form>
+                )}
               </CardContent>
             </Card>
           </div>
