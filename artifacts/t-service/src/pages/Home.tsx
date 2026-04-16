@@ -64,12 +64,6 @@ export default function Home() {
     e.preventDefault();
     setFormStatus("sending");
 
-    const token = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-    const chatIds = (import.meta.env.VITE_TELEGRAM_CHAT_ID as string)
-      .split(",")
-      .map((id: string) => id.trim())
-      .filter(Boolean);
-
     const text = [
       "📋 <b>Новая заявка с сайта Т-СЕРВИС</b>",
       "",
@@ -80,13 +74,16 @@ export default function Home() {
     ].join("\n");
 
     try {
-      await Promise.all(chatIds.map(chatId =>
-        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
-        })
-      ));
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setFormStatus("ok");
       setFormName("");
       setPhoneValue("+7 (");
