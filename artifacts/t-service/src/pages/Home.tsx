@@ -5,7 +5,7 @@ import dockImg from "@assets/cq5dam.L.1600.0_1776186865508.jpeg";
 import pressImg from "@assets/europress_1776186938063.png";
 import hangarImg from "@assets/hangar_door_(ангарные_ворота)_1_1776186989307.JPG";
 import visitImg from "@assets/ремонт_двери_3_1776187212168.jpeg";
-import toImg1 from "@assets/лысый_1776187150290.png";
+import toImg1 from "@assets/photo_5418119815802590206_y_1776687282457.jpg";
 import toImg2 from "@assets/ремонт_дверей_1_1776187150290.jpg";
 import toImg3 from "@assets/ремонт_дока_1_1776187150290.jpg";
 import gateRepairImg from "@assets/автоматические_ворота_1776238923234.png";
@@ -317,7 +317,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-center text-2xl font-bold mb-12 uppercase tracking-wide text-muted-foreground">Мы работаем с брендами</h2>
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {["Hörmann", "Alutech", "DoorHan", "Dorma", "Tormax", "Geze", "ChampionDoor", "Besam", "Came", "Dynaco", "Europress"].map((brand) => (
+            {["Hörmann", "Alutech", "DoorHan", "Dorma", "Tormax", "Geze", "ChampionDoor", "Besam", "Came", "Dynaco", "Europress", "Лоудинг Системс"].map((brand) => (
               <div key={brand} className="text-xl md:text-3xl font-black uppercase tracking-tighter px-4 py-2 border-2 border-border/50 rounded-md">
                 {brand}
               </div>
