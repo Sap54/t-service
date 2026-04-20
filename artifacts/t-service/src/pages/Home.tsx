@@ -317,7 +317,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-center text-2xl font-bold mb-12 uppercase tracking-wide text-muted-foreground">Мы работаем с брендами</h2>
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {["Hörmann", "Alutech", "DoorHan", "Dorma", "Tormax", "Geze", "ChampionDoor", "Besam", "Came", "Dynaco", "Europress", "Лоудинг Системс"].map((brand) => (
+            {["Hörmann", "Alutech", "DoorHan", "Dorma", "Tormax", "Geze", "ChampionDoor", "Besam", "Came", "Dynaco", "Europress", "Loading Systems"].map((brand) => (
               <div key={brand} className="text-xl md:text-3xl font-black uppercase tracking-tighter px-4 py-2 border-2 border-border/50 rounded-md">
                 {brand}
               </div>
