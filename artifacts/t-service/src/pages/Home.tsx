@@ -32,6 +32,7 @@ export default function Home() {
   const [formCity, setFormCity] = React.useState("");
   const [formDesc, setFormDesc] = React.useState("");
   const [formStatus, setFormStatus] = React.useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [mailtoFallback, setMailtoFallback] = React.useState<string | null>(null);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
@@ -74,6 +75,7 @@ export default function Home() {
     ].join("\n");
 
     try {
+      window.ym?.(10000000, "reachGoal", "FORM_SUBMIT");
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 10000);
       const res = await fetch("/api/notify", {
@@ -90,7 +92,11 @@ export default function Home() {
       setFormCity("");
       setFormDesc("");
     } catch {
+      // Статический хостинг без /api — предлагаем письмо с уже заполненным текстом заявки
       setFormStatus("error");
+      const subject = encodeURIComponent("Заявка с сайта Т-СЕРВИС");
+      const body = encodeURIComponent(text.replace(/<[^>]+>/g, ""));
+      setMailtoFallback(`mailto:0001827@gmail.com?subject=${subject}&body=${body}`);
     }
   };
 
@@ -473,7 +479,10 @@ export default function Home() {
                     {formStatus === "sending" ? "Отправляем..." : "Отправить заявку"}
                   </Button>
                   {formStatus === "error" && (
-                    <p className="text-sm text-center text-red-400">Ошибка отправки. Позвоните нам напрямую: <a href="tel:+79139178734" className="underline">+7 (913) 917-87-34</a></p>
+                    <p className="text-sm text-center text-red-400">
+                      Не удалось отправить через сайт. Позвоните: <a href="tel:+79139178734" className="underline">+7 (913) 917-87-34</a>
+                      {mailtoFallback && (<> или <a href={mailtoFallback} className="underline">отправьте заявку письмом</a> (текст уже заполнен)</>)}
+                    </p>
                   )}
                   <p className="text-xs text-center text-muted-foreground">
                     Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.<br/>
