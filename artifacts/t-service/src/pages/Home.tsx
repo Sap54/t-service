@@ -14,90 +14,32 @@ import logoKruger from "@assets/крюгер_лого_1776239863517.png";
 import logoOzon from "@assets/озон_лого_1776267759881.png";
 import logoMetro from "@assets/метро_1776239863517.jpg";
 import logoLenta from "@assets/lenta_1776239863517.jpg";
-import { 
-  Phone, MapPin, Wrench, Settings, 
+import {
+  MapPin, Wrench, Settings,
   ShieldCheck, Clock, Zap, Truck,
-  CheckCircle2, Menu, X, Send,
-  ChevronRight, Star
+  CheckCircle2, ChevronRight, Star, HelpCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import SiteHeader from "@/components/sections/SiteHeader";
+import ContactSection from "@/components/sections/ContactSection";
+import Seo from "@/seo/Seo";
+import { services, homeFaq } from "@/data/services";
+
+/** Карточки услуг главной: страница + картинка */
+const serviceCards = [
+  { slug: "remont-avtomaticheskih-vorot", img: gateRepairImg as string | null, collage: null as string[] | null },
+  { slug: "remont-skorostnyh-vorot", img: "/images/service-speed-doors.png", collage: null },
+  { slug: "remont-avtomaticheskih-dverey", img: autoDoorImg, collage: null },
+  { slug: "remont-angarnyh-pvh-vorot", img: hangarImg, collage: null },
+  { slug: "remont-doklevellerov", img: dockImg, collage: null },
+  { slug: "to-i-diagnostika-vorot", img: null, collage: [toImg1, toImg2, toImg3] },
+];
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [phoneValue, setPhoneValue] = React.useState("+7 (");
-  const [formName, setFormName] = React.useState("");
-  const [formCity, setFormCity] = React.useState("");
-  const [formDesc, setFormDesc] = React.useState("");
-  const [formStatus, setFormStatus] = React.useState<"idle" | "sending" | "ok" | "error">("idle");
-  const [mailtoFallback, setMailtoFallback] = React.useState<string | null>(null);
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
-    const digits = raw.replace(/\D/g, "").slice(1); // убираем ведущую "7"
-    let result = "+7 (";
-    if (digits.length > 0) result += digits.slice(0, 3);
-    if (digits.length >= 3) result += ") ";
-    if (digits.length > 3) result += digits.slice(3, 6);
-    if (digits.length >= 6) result += "-";
-    if (digits.length > 6) result += digits.slice(6, 8);
-    if (digits.length >= 8) result += "-";
-    if (digits.length > 8) result += digits.slice(8, 10);
-    setPhoneValue(result);
-  };
-
-  const handlePhoneFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (!e.target.value || e.target.value === "+7 (") {
-      setPhoneValue("+7 (");
-      setTimeout(() => {
-        e.target.setSelectionRange(4, 4);
-      }, 0);
-    }
-  };
-
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("sending");
-
-    const text = [
-      "📋 <b>Новая заявка с сайта Т-СЕРВИС</b>",
-      "",
-      `👤 <b>Имя:</b> ${formName || "не указано"}`,
-      `📞 <b>Телефон:</b> ${phoneValue}`,
-      `📍 <b>Город:</b> ${formCity || "не указан"}`,
-      `🔧 <b>Описание:</b> ${formDesc || "не указано"}`,
-    ].join("\n");
-
-    try {
-      window.ym?.(10000000, "reachGoal", "FORM_SUBMIT");
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000);
-      const res = await fetch("/api/notify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setFormStatus("ok");
-      setFormName("");
-      setPhoneValue("+7 (");
-      setFormCity("");
-      setFormDesc("");
-    } catch {
-      // Статический хостинг без /api — предлагаем письмо с уже заполненным текстом заявки
-      setFormStatus("error");
-      const subject = encodeURIComponent("Заявка с сайта Т-СЕРВИС");
-      const body = encodeURIComponent(text.replace(/<[^>]+>/g, ""));
-      setMailtoFallback(`mailto:0001827@gmail.com?subject=${subject}&body=${body}`);
-    }
   };
 
   const fadeIn = {
@@ -110,69 +52,34 @@ export default function Home() {
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: homeFaq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary selection:text-white">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-black text-primary tracking-tight">Т-СЕРВИС</span>
-          </div>
-
-          <div className="hidden lg:flex items-center gap-8">
-            <nav className="flex gap-6 text-sm font-medium">
-              <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
-              <a href="#advantages" className="hover:text-primary transition-colors">Преимущества</a>
-              <a href="#brands" className="hover:text-primary transition-colors">Бренды</a>
-            </nav>
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col text-right">
-                <a href="tel:+79139178734" className="text-lg font-bold hover:text-primary transition-colors">
-                  +7 (913) 917-87-34
-                </a>
-                <span className="text-xs text-muted-foreground">Также доступен в MAX</span>
-              </div>
-              <Button onClick={() => window.open('https://t.me/TechFixCrew', '_blank')} variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-                <Send className="w-4 h-4 mr-2" />
-                Telegram
-              </Button>
-            </div>
-          </div>
-
-          <button className="lg:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border p-4 flex flex-col gap-4 shadow-xl">
-            <a href="#services" className="font-medium p-2" onClick={() => setIsMenuOpen(false)}>Услуги</a>
-            <a href="#advantages" className="font-medium p-2" onClick={() => setIsMenuOpen(false)}>Преимущества</a>
-            <a href="#contact" className="font-medium p-2" onClick={() => setIsMenuOpen(false)}>Контакты</a>
-            <div className="flex flex-col gap-2 pt-4 border-t border-border">
-              <a href="tel:+79139178734" className="font-bold text-lg">+7 (913) 917-87-34</a>
-              <Button onClick={() => window.open('https://t.me/TechFixCrew', '_blank')} className="w-full bg-primary text-white">
-                Написать в Telegram
-              </Button>
-            </div>
-          </div>
-        )}
-      </header>
+      <Seo path="/" jsonLd={[faqJsonLd]} />
+      <SiteHeader />
 
       {/* HERO */}
       <section className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden clip-diagonal">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40 z-10" />
-          <img 
-            src={heroBg} 
-            alt="ремонт автоматических ворот Новосибирск Hörmann" 
+          <img
+            src={heroBg}
+            alt="ремонт автоматических ворот Новосибирск Hörmann"
             className="w-full h-full object-cover object-center opacity-50"
           />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-20">
-          <motion.div 
+          <motion.div
             initial="hidden" animate="visible" variants={fadeIn}
             className="max-w-3xl"
           >
@@ -198,7 +105,7 @@ export default function Home() {
                 <span>Гарантия на все выполненные работы</span>
               </li>
             </ul>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 items-center">
               <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-8 bg-primary hover:bg-primary/90 text-white font-bold" onClick={scrollToContact}>
                 Вызвать мастера
@@ -211,7 +118,7 @@ export default function Home() {
       {/* ADVANTAGES */}
       <section id="advantages" className="py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
             className="text-center mb-16"
           >
@@ -219,7 +126,7 @@ export default function Home() {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Надежность, скорость и профессионализм в каждой детали.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerChildren}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
@@ -252,7 +159,7 @@ export default function Home() {
       {/* SERVICES */}
       <section id="services" className="py-24 clip-diagonal-bottom bg-background relative z-10 pb-32">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
             className="mb-16"
           >
@@ -261,50 +168,72 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {[
-              { title: "Автоматические ворота", desc: "Всех производителей. Быстро и с гарантией.", img: gateRepairImg },
-              { title: "Скоростные ворота", desc: "Dynaco, Hörmann, Alutech, DoorHan.", img: "/images/service-speed-doors.png" },
-              { title: "Автоматические двери", desc: "Dorma, Tormax, Geze, DoorHan, Gilgen.", img: autoDoorImg },
-              { title: "Ангарные ПВХ-ворота", desc: "ChampionDoor и другие крупногабаритные системы.", img: hangarImg },
-              { title: "Доклевеллеры", desc: "Ремонт и обслуживание перегрузочного оборудования.", img: dockImg },
-              { title: "Промышленные прессы", desc: "Обслуживание прессов Europress и аналогов.", img: pressImg },
-              { title: "Выезд специалиста", desc: "Быстрый выезд и оценка состояния на месте.", img: visitImg },
-              { title: "Плановое ТО", desc: "Диагностика и профилактика оборудования.", img: null, collage: [toImg1, toImg2, toImg3] }
-            ].map((service, i) => (
-              <Card key={i} className="bg-card border-border overflow-hidden flex flex-col group">
-                {'collage' in service && service.collage ? (
-                  <div className="h-48 grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden">
-                    <div className="row-span-2 overflow-hidden">
-                      <img src={service.collage[0]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            {serviceCards.map(({ slug, img, collage }) => {
+              const s = services.find((x) => x.slug === slug)!;
+              return (
+                <Card key={slug} className="bg-card border-border overflow-hidden flex flex-col group">
+                  {collage ? (
+                    <div className="h-48 grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden">
+                      <div className="row-span-2 overflow-hidden">
+                        <img src={collage[0]} alt={s.h1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <img src={collage[1]} alt={s.h1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <img src={collage[2]} alt={s.h1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </div>
                     </div>
-                    <div className="overflow-hidden">
-                      <img src={service.collage[1]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : img ? (
+                    <div className="h-48 overflow-hidden">
+                      <img src={img} alt={s.h1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
-                    <div className="overflow-hidden">
-                      <img src={service.collage[2]} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  </div>
-                ) : service.img ? (
-                  <div className="h-48 overflow-hidden">
-                    <img src={service.img} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                ) : null}
-                <CardContent className="p-6 flex flex-col flex-grow">
-                  <h4 className="text-xl font-bold mb-2">{service.title}</h4>
-                  <p className="text-muted-foreground text-sm mb-6 flex-grow">{service.desc}</p>
-                  <Button variant="outline" className="w-full mt-auto border-primary/50 hover:bg-primary hover:text-white" onClick={scrollToContact}>
-                    Заказать <ChevronRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-            
+                  ) : null}
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-bold mb-2">{s.name}</h3>
+                    <p className="text-muted-foreground text-sm mb-6 flex-grow">{s.lead}</p>
+                    <a href={`/${slug}/`} className="w-full mt-auto">
+                      <Button variant="outline" className="w-full border-primary/50 hover:bg-primary hover:text-white">
+                        Подробнее <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </a>
+                  </CardContent>
+                </Card>
+              );
+            })}
+
+            {/* Услуги без отдельных страниц */}
+            <Card className="bg-card border-border overflow-hidden flex flex-col group">
+              <div className="h-48 overflow-hidden">
+                <img src={pressImg} alt="Обслуживание промышленных прессов Europress" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <CardContent className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold mb-2">Промышленные прессы</h3>
+                <p className="text-muted-foreground text-sm mb-6 flex-grow">Обслуживание прессов Europress и аналогов.</p>
+                <Button variant="outline" className="w-full mt-auto border-primary/50 hover:bg-primary hover:text-white" onClick={scrollToContact}>
+                  Заказать <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </CardContent>
+            </Card>
+            <Card className="bg-card border-border overflow-hidden flex flex-col group">
+              <div className="h-48 overflow-hidden">
+                <img src={visitImg} alt="Выезд специалиста для оценки оборудования" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <CardContent className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold mb-2">Выезд специалиста</h3>
+                <p className="text-muted-foreground text-sm mb-6 flex-grow">Быстрый выезд и оценка состояния на месте.</p>
+                <Button variant="outline" className="w-full mt-auto border-primary/50 hover:bg-primary hover:text-white" onClick={scrollToContact}>
+                  Заказать <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </CardContent>
+            </Card>
+
             {/* Fun Card */}
             <Card className="bg-primary text-white border-none md:col-span-2 lg:col-span-3 xl:col-span-4 mt-4">
               <CardContent className="p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
                 <Zap className="w-16 h-16 flex-shrink-0" />
                 <div>
-                  <h4 className="text-2xl font-bold mb-2">Роботы Boston Dynamics? Шутка!</h4>
+                  <h3 className="text-2xl font-bold mb-2">Роботы Boston Dynamics? Шутка!</h3>
                   <p className="text-primary-foreground/90 text-lg">
                     Но если есть документация и запчасти — разберёмся с любым промышленным оборудованием. Мы не боимся сложных задач.
                   </p>
@@ -349,7 +278,7 @@ export default function Home() {
               Работаем от Сургута до Иркутска, <br className="hidden md:block"/>
               <span className="text-primary">а по ангарным воротам — по всей России</span>
             </h2>
-            
+
           </div>
         </div>
       </section>
@@ -403,113 +332,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT & FOOTER */}
-      <footer id="contact" className="bg-background pt-24 pb-12 border-t-4 border-primary">
+      {/* FAQ */}
+      <section id="faq" className="py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 mb-20">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black uppercase mb-6">Свяжитесь <span className="text-primary">с нами</span></h2>
-              <p className="text-xl text-muted-foreground mb-10">Оставьте заявку, и мы перезвоним для уточнения деталей.</p>
-              
-              <div className="flex flex-col gap-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
-                    <Phone className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1 uppercase font-bold tracking-wider">Главный телефон</div>
-                    <a href="tel:+79139178734" className="text-3xl font-black hover:text-primary transition-colors block mb-2">+7 (913) 917-87-34</a>
-                    <div className="flex flex-col gap-1 text-muted-foreground">
-                      <a href="tel:+79130001823" className="hover:text-white">+7 (913) 000-18-23</a>
-                      <a href="tel:+79130001827" className="hover:text-white">+7 (913) 000-18-27</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
-                    <Send className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1 uppercase font-bold tracking-wider">Telegram</div>
-                    <a href="https://t.me/TechFixCrew" target="_blank" rel="noreferrer" className="text-xl font-bold hover:text-primary transition-colors">@TechFixCrew</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Card className="bg-secondary/30 border-border/50">
-              <CardContent className="p-8">
-                {formStatus === "ok" ? (
-                  <div className="flex flex-col items-center justify-center text-center py-12 gap-4">
-                    <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
-                      <CheckCircle2 className="w-8 h-8 text-green-500" />
-                    </div>
-                    <h3 className="text-2xl font-black">Заявка отправлена!</h3>
-                    <p className="text-muted-foreground">Мы получили вашу заявку и скоро перезвоним.</p>
-                    <Button variant="outline" className="mt-4" onClick={() => setFormStatus("idle")}>Отправить ещё</Button>
-                  </div>
-                ) : (
-                <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
-                  <div>
-                    <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Имя</label>
-                    <Input value={formName} onChange={e => setFormName(e.target.value)} placeholder="Как к вам обращаться?" className="bg-background border-border h-12" required />
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Телефон *</label>
-                    <Input
-                      type="tel"
-                      value={phoneValue}
-                      onChange={handlePhoneChange}
-                      onFocus={handlePhoneFocus}
-                      placeholder="+7 (___) ___-__-__"
-                      className="bg-background border-border h-12"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Город</label>
-                    <Input value={formCity} onChange={e => setFormCity(e.target.value)} placeholder="Ваш город" className="bg-background border-border h-12" />
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold uppercase tracking-wider mb-2 block">Бренд / Описание проблемы</label>
-                    <Textarea value={formDesc} onChange={e => setFormDesc(e.target.value)} placeholder="Что сломалось?" className="bg-background border-border min-h-[120px]" />
-                  </div>
-                  <Button type="submit" disabled={formStatus === "sending"} size="lg" className="w-full h-16 text-lg font-bold bg-primary hover:bg-primary/90 text-white">
-                    {formStatus === "sending" ? "Отправляем..." : "Отправить заявку"}
-                  </Button>
-                  {formStatus === "error" && (
-                    <p className="text-sm text-center text-red-400">
-                      Не удалось отправить через сайт. Позвоните: <a href="tel:+79139178734" className="underline">+7 (913) 917-87-34</a>
-                      {mailtoFallback && (<> или <a href={mailtoFallback} className="underline">отправьте заявку письмом</a> (текст уже заполнен)</>)}
-                    </p>
-                  )}
-                  <p className="text-xs text-center text-muted-foreground">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.<br/>
-                    Также доступны в <span className="text-primary font-bold">MAX</span> — лучшем мессенджере в мире.
-                  </p>
-                </form>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <div>&copy; {new Date().getFullYear()} Т-СЕРВИС. Все права защищены.</div>
-            <div className="flex gap-4">
-              <span>Ремонт ворот</span>
-              <span>•</span>
-              <span>Автоматические двери</span>
-              <span>•</span>
-              <span>Доклевеллеры</span>
-            </div>
-            <div className="flex gap-4">
-              <a href="mailto:0001827@gmail.com" className="hover:text-primary">0001827@gmail.com</a>
-              <a href="mailto:0001823@gmail.com" className="hover:text-primary">0001823@gmail.com</a>
-            </div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-12">
+            <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl md:text-5xl font-black uppercase mb-4">Частые <span className="text-primary">вопросы</span></h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Ответы на то, что спрашивают чаще всего. Не нашли свой вопрос — позвоните, подскажем.</p>
+          </motion.div>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              {homeFaq.map((f, i) => (
+                <AccordionItem key={i} value={`faq-${i}`}>
+                  <AccordionTrigger className="text-left text-lg font-bold">{f.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-base leading-relaxed">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <ContactSection />
     </div>
   );
 }

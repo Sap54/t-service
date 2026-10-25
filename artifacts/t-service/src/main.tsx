@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
+
 // Шрифты локально (@fontsource) вместо Google Fonts CDN — быстрее для посетителей из РФ
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";

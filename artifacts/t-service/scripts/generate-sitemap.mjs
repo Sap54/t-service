@@ -3,7 +3,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { BASE_URL, pages } from "../src/seo/pages.mjs";
+import { BASE_URL, pages } from "../src/seo/pages.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outPath = resolve(__dirname, "..", "dist", "public", "sitemap.xml");

@@ -1,8 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import prerender from "@prerenderer/rollup-plugin";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+import { pages } from "./src/seo/pages";
 
 // На Replit PORT/BASE_PATH задаются окружением; локально достаточно дефолтов.
 const rawPort = process.env.PORT ?? "5000";
@@ -21,6 +23,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
+    // Пререндер SPA выполняется отдельным скриптом scripts/prerender.mjs
+    // после сборки (см. "build" в package.json): каждый маршрут из манифеста
+    // src/seo/pages.ts сохраняется как готовый HTML с контентом и мета-тегами.
+
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [
